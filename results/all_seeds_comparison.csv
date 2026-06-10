@@ -1,0 +1,7 @@
+﻿seed,algorithm,success,path_length,turn_count,danger_cells,collision,running_time,expanded_nodes,total_cost,total_reward,final_success_rate,avg_reward_last_100,episodes,max_steps
+7,A*,True,56,12,16,False,0.023000240325927734,2795,76.0,,,,,
+7,Q-learning,True,62,6,14,False,9.409382581710815,,,80.0,0.96,81.48,10000,1000
+11,A*,True,60,10,17,False,0.024998903274536133,3061,88.99999999999997,,,,,
+11,Q-learning,False,31,6,1,False,67.86326432228088,,,-1652.0,0.0,-1640.75,10000,1000
+21,A*,True,58,5,13,False,0.01799631118774414,2334,71.19999999999997,,,,,
+21,Q-learning,True,58,5,13,False,6.7562737464904785,,,125.0,0.99,106.11,10000,1000
