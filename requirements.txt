@@ -1,0 +1,8 @@
+numpy>=1.24,<3
+
+# Optional legacy demos and training scripts
+matplotlib>=3.7
+pygame>=2.5
+torch>=2.1
+gradio>=4.0
+pandas>=2.0

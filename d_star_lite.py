@@ -52,8 +52,9 @@ class DStarLite:
         self.g = {}       # g-value
         self.rhs = {}     # rhs-value
         self.U = []       # 优先队列 (key, s)
-        self.U_set = set()  # 快速查找
+        self.U_keys = {}    # 节点当前有效key；堆中的旧条目惰性删除
         self.km = 0       # 启发式偏移累积
+        self.expanded_nodes = 0
 
         self._init()
 
@@ -73,7 +74,11 @@ class DStarLite:
     def _neighbors(self, s):
         """s的四个邻居"""
         r, c = s
-        return [(r-1, c), (r+1, c), (r, c-1), (r, c+1)]
+        return [
+            (nr, nc)
+            for nr, nc in ((r-1, c), (r+1, c), (r, c-1), (r, c+1))
+            if 0 <= nr < self.rows and 0 <= nc < self.cols
+        ]
 
     def _pred(self, s):
         """s的前驱 = 邻居 (无向图)"""
@@ -95,24 +100,22 @@ class DStarLite:
     def _push(self, s):
         key = self._key(s)
         heapq.heappush(self.U, (key, s))
-        self.U_set.add(s)
+        self.U_keys[s] = key
 
     def _pop(self):
         while self.U:
             key, s = heapq.heappop(self.U)
-            self.U_set.discard(s)
-            # 惰性删除：检查 key 是否过期
-            if self._key(s) == key:
+            if self.U_keys.get(s) == key:
+                self.U_keys.pop(s, None)
                 return key, s
         return None
 
     def _top_key(self):
         while self.U:
             key, s = self.U[0]
-            if s in self.U_set and self._key(s) == key:
+            if self.U_keys.get(s) == key:
                 return key
             heapq.heappop(self.U)
-            self.U_set.discard(s)
         return (INF, INF)
 
     def _update_vertex(self, u):
@@ -127,9 +130,7 @@ class DStarLite:
                     min_cost = c + g_sp
             self.rhs[u] = min_cost
 
-        if u in self.U_set:
-            self.U_set.discard(u)
-            # 注意：U中的旧entry会在pop时被惰性删除
+        self.U_keys.pop(u, None)
 
         if self.g.get(u, INF) != self.rhs.get(u, INF):
             self._push(u)
@@ -139,9 +140,10 @@ class DStarLite:
         self.g = {}
         self.rhs = {}
         self.U = []
-        self.U_set = set()
+        self.U_keys = {}
         self.km = 0
         self.last_start = self.start
+        self.expanded_nodes = 0
 
         # 所有节点初始化为无穷
         for r in range(self.rows):
@@ -162,6 +164,7 @@ class DStarLite:
             if popped is None:
                 break
             key, u = popped
+            self.expanded_nodes += 1
             g_u = self.g.get(u, INF)
             rhs_u = self.rhs.get(u, INF)
 
@@ -284,4 +287,4 @@ def dstar_lite_step(grid, start, goal):
     if not path:
         return {"success": False, "path": [], "expanded": 0, "cost": INF}
     cost = len(path) - 1 if path else 0
-    return {"success": True, "path": path, "expanded": len(path), "cost": float(cost)}
+    return {"success": True, "path": path, "expanded": dstar.expanded_nodes, "cost": float(cost)}

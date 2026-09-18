@@ -352,6 +352,7 @@ def generate_random_thin_obstacles(
 # 动态障碍物环境
 # ============================================================
 
+import copy
 import random as _random
 
 
@@ -392,7 +393,8 @@ class DynamicGridEnv:
     def __init__(self, grid, start, goal, start_dir=1,
                  moving_obstacles=None,
                  obstacle_patterns=None,
-                 danger_radius=1):
+                 danger_radius=1,
+                 seed=0):
         self._static_grid = np.array(grid, dtype=int)
         self.start = start
         self.goal = goal
@@ -401,8 +403,10 @@ class DynamicGridEnv:
         self.danger_radius = danger_radius
 
         # 移动障碍物
-        self.moving_obstacles = moving_obstacles if moving_obstacles is not None else []
+        self.moving_obstacles = list(moving_obstacles) if moving_obstacles is not None else []
         self.obstacle_patterns = obstacle_patterns if obstacle_patterns is not None else []
+        self.seed = seed
+        self._rng = _random.Random(seed)
         # 每个移动障碍物的巡逻状态
         self._patrol_state = []
         for i, (r, c) in enumerate(self.moving_obstacles):
@@ -412,6 +416,11 @@ class DynamicGridEnv:
                 "direction": 1,   # +1 或 -1
                 "step_count": 0,
             })
+
+        # Episodes must start from the exact same world state.  Keeping a
+        # snapshot also makes planner comparisons reproducible.
+        self._initial_moving_obstacles = list(self.moving_obstacles)
+        self._initial_patrol_state = copy.deepcopy(self._patrol_state)
 
         self.current_state = self.start_state
 
@@ -518,8 +527,8 @@ class DynamicGridEnv:
 
             elif pattern == "random":
                 # 随机游走
-                dr = _random.choice([-1, 0, 1])
-                dc = _random.choice([-1, 0, 1])
+                dr = self._rng.choice([-1, 0, 1])
+                dc = self._rng.choice([-1, 0, 1])
                 if dr == 0 and dc == 0:
                     continue
                 nr, nc = r + dr, c + dc
@@ -542,6 +551,9 @@ class DynamicGridEnv:
 
     def reset(self):
         self.current_state = self.start_state
+        self.moving_obstacles = list(self._initial_moving_obstacles)
+        self._patrol_state = copy.deepcopy(self._initial_patrol_state)
+        self._rng = _random.Random(self.seed)
         return self.current_state
 
     def step(self, action):
@@ -649,6 +661,7 @@ def create_dynamic_env(
         moving_obstacles=moving_positions,
         obstacle_patterns=obstacle_patterns,
         danger_radius=danger_radius,
+        seed=seed,
     )
     return env
 

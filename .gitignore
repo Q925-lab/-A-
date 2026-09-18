@@ -2,6 +2,8 @@
 __pycache__/
 *.pyc
 *.pyo
+.pytest_cache/
+.coverage
 
 # Training checkpoints (large files)
 checkpoint.pkl
@@ -18,5 +20,10 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Temp
+# Temp and local document QA
 *.log
+docs/_render/
+
+# Local environments
+.venv/
+venv/

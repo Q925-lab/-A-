@@ -1,0 +1,67 @@
+[
+  {
+    "algorithm": "Replanning A*",
+    "episodes": 30,
+    "success_rate": 0.6333333333333333,
+    "collision_rate": 0.3333333333333333,
+    "mean_steps": 51.766666666666666,
+    "mean_path_length": 36.03333333333333,
+    "mean_turns": 15.733333333333333,
+    "mean_min_clearance": 1.928627416976511,
+    "latency_mean_ms": 0.29186891291265554,
+    "latency_p95_ms": 0.7328733326479172,
+    "mean_shield_interventions": 0.0
+  },
+  {
+    "algorithm": "Online D* Lite",
+    "episodes": 30,
+    "success_rate": 0.7333333333333333,
+    "collision_rate": 0.23333333333333334,
+    "mean_steps": 61.4,
+    "mean_path_length": 47.733333333333334,
+    "mean_turns": 13.666666666666666,
+    "mean_min_clearance": 2.093488695617704,
+    "latency_mean_ms": 0.15972635354743897,
+    "latency_p95_ms": 0.3942866644744451,
+    "mean_shield_interventions": 0.0
+  },
+  {
+    "algorithm": "PSH - prediction",
+    "episodes": 30,
+    "success_rate": 0.7,
+    "collision_rate": 0.3,
+    "mean_steps": 40.9,
+    "mean_path_length": 35.93333333333333,
+    "mean_turns": 4.966666666666667,
+    "mean_min_clearance": 1.923738929572643,
+    "latency_mean_ms": 4.621299311024188,
+    "latency_p95_ms": 5.989883333677426,
+    "mean_shield_interventions": 0.06666666666666667
+  },
+  {
+    "algorithm": "PSH - shield",
+    "episodes": 30,
+    "success_rate": 0.6666666666666666,
+    "collision_rate": 0.3333333333333333,
+    "mean_steps": 39.63333333333333,
+    "mean_path_length": 34.833333333333336,
+    "mean_turns": 4.733333333333333,
+    "mean_min_clearance": 1.9708793816517463,
+    "latency_mean_ms": 4.646207026136406,
+    "latency_p95_ms": 6.006019998070163,
+    "mean_shield_interventions": 0.0
+  },
+  {
+    "algorithm": "PSH (full)",
+    "episodes": 30,
+    "success_rate": 0.8666666666666667,
+    "collision_rate": 0.13333333333333333,
+    "mean_steps": 46.9,
+    "mean_path_length": 41.3,
+    "mean_turns": 5.6,
+    "mean_min_clearance": 2.1042127149850796,
+    "latency_mean_ms": 4.500984222780831,
+    "latency_p95_ms": 6.063853330366935,
+    "mean_shield_interventions": 0.9
+  }
+]
