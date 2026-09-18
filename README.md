@@ -1,4 +1,4 @@
-# PSH Planner
+# PSH Planner：局部观测动态环境下的预测式安全混合导航
 
 面向局部观测与动态障碍的预测式安全混合路径规划器。
 
@@ -68,10 +68,16 @@ psh_planner/
   hybrid.py           # PSH 总控与 D* Lite 全局走廊
   baselines.py        # 同观测条件的在线基线
 benchmark_psh.py      # 多种子实验与消融
+config.py             # 栅格状态与动作定义
+grid_env.py           # 可复现动态环境
+d_star_lite.py        # 增量式全局规划器
 tests/                # 环境和规划组件回归测试
-docs/                 # 方法说明、图和技术报告
-results/psh_benchmark # 可复现实验原始结果
+docs/                 # 方法说明、架构图、结果图和技术报告
+results/psh_benchmark # 30 个种子的逐回合与汇总结果
+tools/                # 图表和报告的可复现生成脚本
 ```
+
+早期算法比较、强化学习训练脚本和模型权重不属于当前 PSH 系统，已从主分支工作树移除。相关实现仍保留在 Git 历史中，避免干扰当前架构和复现实验。
 
 ## 方法边界
 

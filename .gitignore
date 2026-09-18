@@ -23,7 +23,38 @@ Thumbs.db
 # Temp and local document QA
 *.log
 docs/_render/
+docs/_qa_final/
+docs/~$*.docx
 
 # Local environments
 .venv/
 venv/
+
+# Local legacy prototype material (kept off the project-facing branch)
+/app.py
+/astar.py
+/demo*.py
+/dqn_*.py
+/evaluate.py
+/experiment.py
+/main.py
+/mcts_planner.py
+/ppo_agent.py
+/q_learning.py
+/train*.py
+/visualize.py
+/web_demo.py
+/gen_pre_doc.py
+/md2docx*.py
+/report.md
+/*.docx
+/PRE*.md
+/*讲稿*.md
+/*答辩*.md
+/*演示*.md
+/项目接手说明_README.txt
+
+# Keep only the reproducible PSH benchmark in the public results tree
+/results/*
+!/results/psh_benchmark/
+!/results/psh_benchmark/**

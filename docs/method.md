@@ -1,4 +1,4 @@
-# Predictive Safe Hybrid Planner
+# PSH Planner: Predictive Safe Hybrid Navigation under Partial Observation
 
 ## Problem
 
